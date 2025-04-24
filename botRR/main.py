@@ -5,8 +5,6 @@ from datetime import datetime, timedelta, time
 import pytz
 import os
 from dotenv import load_dotenv
-from flask import Flask
-from threading import Thread
 
 # === Carrega token do .env ===
 load_dotenv()
@@ -79,20 +77,5 @@ async def horario(interaction: discord.Interaction):
     hj = calcular_hora_do_jogo().strftime("%H:%M")
     await interaction.response.send_message(f"🕒 A hora atual no jogo é **{hj}**")
 
-# === Servidor Flask para UptimeRobot ===
-app = Flask('')
-
-@app.route('/')
-def home():
-    return "Bot está on!", 200
-
-def run():
-    app.run(host='0.0.0.0', port=8080)
-
-def manter_online():
-    t = Thread(target=run)
-    t.start()
-
-# === Executa o servidor Flask ANTES do bot ===
-manter_online()
+# === Inicia o bot ===
 bot.run(TOKEN)
